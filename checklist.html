@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>直播间落地执行手册 + 排期</title>
+<style>
+  :root{
+    --ink:#1f2430; --muted:#6b7280; --line:#e1e6ee; --soft:#f6f8fb;
+    --buy:#f59e0b; --ship:#94a3b8; --env:#3b82f6; --deco:#10b981;
+    --light:#8b5cf6; --shoot:#ef4444; --content:#0ea5e9;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#eef1f5;color:var(--ink);line-height:1.6;
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 70px;}
+  header{background:linear-gradient(135deg,#0f172a,#334155);color:#fff;border-radius:16px;padding:26px 28px;margin-bottom:20px;}
+  header h1{margin:0 0 6px;font-size:24px;}
+  header p{margin:0;color:#cbd5e1;font-size:13px;}
+  .pbar{height:10px;background:rgba(255,255,255,.18);border-radius:99px;margin-top:16px;overflow:hidden;}
+  .pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#34d399,#0ea5e9);transition:width .3s;}
+  .pinfo{font-size:12px;color:#cbd5e1;margin-top:6px;}
+  section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 6px rgba(20,30,50,.04);}
+  h2{font-size:18px;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  h2 .n{background:var(--ink);color:#fff;border-radius:8px;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:0 0 26px;}
+  /* 甘特 */
+  .gantt{font-size:11px;overflow-x:auto;}
+  .gantt-grid{display:grid;grid-template-columns:150px repeat(21,1fr);gap:3px;min-width:760px;align-items:center;}
+  .gh{font-weight:700;color:#64748b;font-size:10.5px;text-align:center;padding:3px 0;}
+  .gh.wk{background:#eef2f7;border-radius:5px;}
+  .gtask{font-size:11.5px;font-weight:600;padding:5px 6px 5px 0;white-space:nowrap;}
+  .bar{height:18px;border-radius:5px;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700;}
+  .cell{height:18px;}
+  .legend{display:flex;flex-wrap:wrap;gap:7px 14px;margin-top:12px;font-size:11.5px;color:#475569;}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .dot{width:12px;height:12px;border-radius:3px;display:inline-block;}
+  /* 阶段卡 */
+  .phase{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+  .phase-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:8px;}
+  .phase-h .badge{font-size:11px;font-weight:700;color:#fff;border-radius:6px;padding:2px 9px;}
+  .phase-h .when{font-size:11.5px;color:var(--muted);}
+  .phase-h .cost{font-size:11.5px;color:#0f766e;font-weight:700;margin-left:auto;}
+  .goal{font-size:12.5px;color:#475569;background:var(--soft);border-radius:8px;padding:8px 11px;margin-bottom:10px;}
+  ul.todo{list-style:none;margin:0;padding:0;}
+  ul.todo li{display:flex;gap:9px;align-items:flex-start;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13px;}
+  ul.todo li:last-child{border-bottom:none;}
+  ul.todo input{margin-top:3px;width:16px;height:16px;flex:0 0 16px;cursor:pointer;}
+  ul.todo label{cursor:pointer;}
+  ul.todo .tip{color:var(--muted);font-size:11.5px;}
+  .done label{text-decoration:line-through;color:#9ca3af;}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:11px 13px;font-size:12.5px;color:#92400e;margin-top:10px;}
+  .note b{color:#7c2d12;}
+  .key{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:11px 13px;font-size:12.5px;color:#065f46;margin-top:10px;}
+  .crit{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:11px 13px;font-size:12.5px;color:#991b1b;margin-top:10px;}
+  .toolbar{display:flex;gap:10px;margin-bottom:16px;}
+  .btn{font-size:12px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;color:#475569;}
+  .btn:hover{background:var(--soft);}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);}
+  th{background:var(--soft);font-size:12px;}
+  .foot{text-align:center;color:#94a3b8;font-size:12px;margin-top:24px;}
+  @media print{body{background:#fff;}section,header{box-shadow:none;break-inside:avoid;}.toolbar{display:none;}
+    body{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>个人 IP 直播间 · 落地执行手册 + 排期</h1>
+    <p>目标:3 周内"能出片"。内容轨从第 1 天并行启动(用 Pocket 3 先拍),不等棚完工。<br>
+    锚定:若 Day1 ≈ 5/28 开工 → 6/17 前出片,距 8/4 出第一单留足缓冲。</p>
+    <div class="pbar"><i id="pbar"></i></div>
+    <div class="pinfo" id="pinfo">进度 0%</div>
+  </header>
+
+  <div class="toolbar">
+    <button class="btn" onclick="window.print()">🖨 打印/存PDF</button>
+    <button class="btn" onclick="resetAll()">↺ 重置勾选</button>
+    <span style="font-size:11.5px;color:#94a3b8;align-self:center;">勾选会自动保存在本浏览器</span>
+  </div>
+
+  <!-- 排期甘特 -->
+  <section>
+    <h2><span class="n">A</span>排期总览（21 天 · 甘特图）</h2>
+    <div class="gantt">
+      <div class="gantt-grid" id="ganttHead"></div>
+      <div class="gantt-grid" id="ganttBody" style="margin-top:4px;"></div>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--buy)"></i>采购下单</span>
+      <span><i class="dot" style="background:var(--ship)"></i>物流/窗帘定制（关键路径）</span>
+      <span><i class="dot" style="background:var(--env)"></i>环境处理</span>
+      <span><i class="dot" style="background:var(--deco)"></i>东墙陈设</span>
+      <span><i class="dot" style="background:var(--light)"></i>灯光+设备调试</span>
+      <span><i class="dot" style="background:var(--shoot)"></i>试拍验证</span>
+      <span><i class="dot" style="background:var(--content)"></i>内容轨（并行）</span>
+    </div>
+    <div class="crit"><b>🔴 关键路径 = 窗帘定制 + 物流到货（约 7-9 天）。</b>所以 Day1 第一件事就是<b>下单 + 量好北窗尺寸定制窗帘</b>，它最慢，决定整个工期。其它小件可同期到货。</div>
+    <div class="key"><b>🟢 内容轨从 Day1 并行：</b>不要等棚搭完才开拍。用现有 Pocket 3 + 现场光先裸拍、练出镜状态、测内容选题——"卖了再准备 &gt; 等准备好再卖"。棚是来提升质感的，不是开拍的前提。</div>
+  </section>
+
+  <!-- 阶段手册 -->
+  <section>
+    <h2><span class="n">B</span>分阶段执行手册</h2>
+    <div id="phases"></div>
+  </section>
+
+  <!-- 验收标准 -->
+  <section>
+    <h2><span class="n">C</span>验收标准（怎么算"搭好了"）</h2>
+    <table>
+      <tr><th style="width:22%">维度</th><th>合格线</th></tr>
+      <tr><td>遮光</td><td>窗帘全封后白天关灯，房间接近全黑、无侧漏光</td></tr>
+      <tr><td>虚化</td><td>主体距东墙背景 1.5-2m，成片背景明显化开、有光斑层次</td></tr>
+      <tr><td>布光</td><td>人脸有主光方向感、暗部不死黑、人物边缘与背景分离</td></tr>
+      <tr><td>声音</td><td>领夹麦人声干净，房间无明显回声/混响（拍手测试不"嗡"）</td></tr>
+      <tr><td>背景</td><td>东墙陈设虚化后是"光斑和层次"，不杂乱；机位转动全程背景都是墙</td></tr>
+      <tr><td>动线</td><td>开关门、进出不入镜、不碰机位</td></tr>
+      <tr><td>湿度</td><td>湿度计常态 &lt;60%，镜头存防潮箱</td></tr>
+    </table>
+  </section>
+
+  <p class="foot">直播间落地执行手册 · 2026-05 · 进度本地保存于浏览器</p>
+</div>
+
+<script>
+// ===== 数据 =====
+const WEEKS = ['第 1 周','第 2 周','第 3 周'];
+const ganttRows = [
+  {name:'🛒 采购下单',      color:'var(--buy)',     s:1,  e:2,  txt:''},
+  {name:'🚚 物流/窗帘定制',  color:'var(--ship)',    s:2,  e:9,  txt:'关键路径'},
+  {name:'🏠 环境处理',      color:'var(--env)',     s:9,  e:12, txt:''},
+  {name:'🖼️ 东墙陈设',      color:'var(--deco)',    s:11, e:14, txt:''},
+  {name:'💡 灯光+调试',     color:'var(--light)',   s:14, e:16, txt:''},
+  {name:'🎬 试拍验证+模板',  color:'var(--shoot)',   s:16, e:21, txt:''},
+  {name:'🎥 内容轨(Pocket3)',color:'var(--content)', s:1,  e:21, txt:'并行·别等棚'},
+];
+const phases = [
+  { id:'p0', title:'阶段 0 · 采购下单', color:'var(--buy)', when:'Day 1-2', cost:'≈¥1.66 万',
+    goal:'一次性把第一阶段所有东西下单。窗帘最慢，先下；量好北窗尺寸再定制。',
+    items:[
+      ['量北窗尺寸 → 定制三合一遮光绒布窗帘（防霉款，带侧封边）','¥2200 · 最长货期，第一个下单'],
+      ['主光 amaran 100d S + 90cm 八角柔光箱','¥2000'],
+      ['辅光 amaran 60d','¥900'],
+      ['轮廓/背景光 amaran 灯管 T2c ×2','¥1200'],
+      ['灯架 ×3 + Pocket 3 桌面云台座','¥1300'],
+      ['DJI Mic 2（单发）','¥1300'],
+      ['平板落地提词器','¥600'],
+      ['电子防潮箱 + 除湿机 + 湿度计 + 防潮珠','¥1300'],
+      ['哑光短绒地毯 3×3m','¥800'],
+      ['吸音板（防霉款，西/南墙用量）','¥1500'],
+      ['东墙陈设：书架 + LED 灯带 + 装饰画 + 绿植 + 落地灯','¥3500'],
+    ],
+    note:'下单前必做：① 量准北窗尺寸（定制窗帘）② 吸音板/窗帘选防霉款 ③ 大件确认能送到楼上。' },
+
+  { id:'p1', title:'阶段 1 · 环境处理（打底子）', color:'var(--env)', when:'Day 9-12（货到后）', cost:'施工/自装',
+    goal:'先把"看不见但决定一切"的环境做对：遮光、声学、防潮、电路。',
+    items:[
+      ['装北墙整面遮光窗帘，白天关灯验全黑、检查侧漏光','遮光是多机位统一色温的前提'],
+      ['铺哑光地毯（盖住主拍摄区）','杀地面反光+吸脚步声'],
+      ['西墙挂吸音板',''],
+      ['南墙挂吸音板 + 摆运营/办公桌 + 置物架','机位背后、不入镜'],
+      ['防潮箱就位、除湿机开机、湿度计盯 <60%',''],
+      ['理线 + 测电路：灯+空调+设备同开不跳闸','跳闸就分路/加插排'],
+    ],
+    key:'阶段 1 做完，房间已经"安静、可控光、防潮"——这是质感的隐形地基。' },
+
+  { id:'p2', title:'阶段 2 · 东墙门面陈设', color:'var(--deco)', when:'Day 11-14', cost:'含采购',
+    goal:'东墙是唯一入镜的背景，慢慢调到满意。记住：虚化后留下的是"光斑和层次"。',
+    items:[
+      ['书架定位（离墙留 1-2cm 缝防潮）',''],
+      ['走 LED 灯带（书架/层板，暖光）','虚化后变光斑=高级感来源'],
+      ['挂装饰画：高低错落、不对称','别两面都堆满'],
+      ['摆绿植 + 落地灯（制造暖光点）',''],
+      ['检查：远端摆设别露进 C 全景画面边缘',''],
+    ],
+    note:'重点放"会发光的东西"（灯带/台灯/落地灯）——它们虚化后是柔和光斑，这才是影视飓风那种感觉。' },
+
+  { id:'p3', title:'阶段 3 · 灯光 + 拍摄设备', color:'var(--light)', when:'Day 14-16', cost:'含采购',
+    goal:'四灯布光到位，Pocket 3 + 麦 + 提词器调试，准备开拍。',
+    items:[
+      ['架主光（人脸前侧 45°，柔光箱）','定调'],
+      ['架辅光（补暗部）、轮廓光（后上勾边）','降反差+分离主体'],
+      ['架背景光照东墙陈设','出层次光斑'],
+      ['Pocket 3 上云台座，定位主体距东墙 1.5-2m','拉开=虚化'],
+      ['DJI Mic 2 配对 Pocket 3，测收音电平',''],
+      ['提词器就位，导一段稿测试',''],
+    ],
+    key:'布光口诀：主光定调 → 辅光降反差 → 轮廓光分离 → 背景光出层次。' },
+
+  { id:'p4', title:'阶段 4 · 试拍验证 + 工作流', color:'var(--shoot)', when:'Day 16-21', cost:'—',
+    goal:'跑通"能出片"，并建立可复用的后期工作流。',
+    items:[
+      ['试拍一条口播，对照验收标准（虚化/光比/声音/背景/动线）',''],
+      ['录制式多机位测试：Pocket3+Action5+手机+Insta360 同时录、后期同步','零成本多机位'],
+      ['ScreenStudio 录屏 + 口播小窗，跑一遍教程格式',''],
+      ['搭一套后期动效模板（片头/字幕条/知识卡）','单人产能杠杆'],
+      ['产出第一条像样内容，发出去','破零>完美'],
+    ],
+    note:'白天 9-16 点是你能录的完整时段（晚上陪女儿不录）；后期/模板可放凌晨深度时段。' },
+
+  { id:'p5', title:'阶段 5 · 第二阶段升级（后补）', color:'#64748b', when:'出内容/有回流后（T+30~60）', cost:'¥1.5-4 万',
+    goal:'有现金回流或接到访谈/项目需求后再投，别现在花。',
+    items:[
+      ['全画幅 A7 级机身 + 24-70 f2.8（兼顾照片/外出/主机位）','别现在买'],
+      ['ATEM Mini Pro ISO（实时多机位/访谈直播切换）',''],
+      ['访谈家具：双人沙发 + 主播扶手椅 + 圆几',''],
+      ['加 2 支领夹/桌面麦',''],
+    ],
+    note:'相机是"一次买好"的独立决策——先用 Pocket 3 验证出镜状态和产能，再决定。' },
+];
+
+// ===== 渲染甘特 =====
+const head = document.getElementById('ganttHead');
+head.innerHTML = '<div class="gh"></div>' + WEEKS.map(w=>`<div class="gh wk" style="grid-column:span 7">${w}</div>`).join('');
+const body = document.getElementById('ganttBody');
+let bodyHTML = '';
+ganttRows.forEach(r=>{
+  bodyHTML += `<div class="gtask">${r.name}</div>`;
+  for(let d=1; d<=21; d++){
+    if(d===r.s){
+      const span = r.e - r.s + 1;
+      bodyHTML += `<div class="bar" style="grid-column:span ${span};background:${r.color}">${r.txt||''}</div>`;
+      d = r.e;
+    } else {
+      bodyHTML += `<div class="cell"></div>`;
+    }
+  }
+});
+body.innerHTML = bodyHTML;
+
+// ===== 渲染阶段 =====
+const pc = document.getElementById('phases');
+pc.innerHTML = phases.map(p=>`
+  <div class="phase">
+    <div class="phase-h">
+      <span class="badge" style="background:${p.color}">${p.title}</span>
+      <span class="when">${p.when}</span>
+      <span class="cost">${p.cost}</span>
+    </div>
+    <div class="goal">🎯 ${p.goal}</div>
+    <ul class="todo">
+      ${p.items.map((it,i)=>`<li data-k="${p.id}_${i}">
+        <input type="checkbox" id="${p.id}_${i}">
+        <label for="${p.id}_${i}"><span>${it[0]}</span>${it[1]?` <span class="tip">— ${it[1]}</span>`:''}</label>
+      </li>`).join('')}
+    </ul>
+    ${p.note?`<div class="note">⚠️ ${p.note}</div>`:''}
+    ${p.key?`<div class="key">✅ ${p.key}</div>`:''}
+  </div>`).join('');
+
+// ===== 勾选 + 进度 + 本地存储 =====
+const KEY='studio_checklist_v1';
+const saved = JSON.parse(localStorage.getItem(KEY)||'{}');
+const boxes = document.querySelectorAll('ul.todo input');
+function update(){
+  let done=0;
+  boxes.forEach(b=>{
+    const li=b.closest('li');
+    if(b.checked){done++; li.classList.add('done');} else li.classList.remove('done');
+  });
+  const pct = Math.round(done/boxes.length*100);
+  document.getElementById('pbar').style.width = pct+'%';
+  document.getElementById('pinfo').textContent = `进度 ${pct}%　(${done}/${boxes.length} 项)`;
+}
+boxes.forEach(b=>{
+  if(saved[b.id]) b.checked=true;
+  b.addEventListener('change',()=>{
+    saved[b.id]=b.checked;
+    localStorage.setItem(KEY,JSON.stringify(saved));
+    update();
+  });
+});
+function resetAll(){
+  if(!confirm('确定清空所有勾选?')) return;
+  localStorage.removeItem(KEY);
+  boxes.forEach(b=>b.checked=false);
+  update();
+}
+update();
+</script>
+</body>
+</html>
