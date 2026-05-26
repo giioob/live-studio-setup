@@ -1,0 +1,5 @@
+frames/
+*.png
+.playwright-mcp/
+直播间平面布局图.html
+直播间CAD平面图.html

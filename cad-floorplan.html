@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人 IP 直播间 · CAD 平面图（东北角背景 · 旋转版）</title>
+<style>
+  :root{ --ink:#1f2430; --muted:#6b7280; --line:#cbd2dc; --wall:#2b3442; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#eef1f5;color:var(--ink);
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+  .wrap{max-width:1280px;margin:0 auto;padding:26px 18px 60px;}
+  h1{font-size:22px;margin:0 0 2px;}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 18px;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;}
+  @media(max-width:1040px){.row{grid-template-columns:1fr;}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;
+    box-shadow:0 2px 10px rgba(20,30,50,.05);}
+  .card h2{font-size:16px;margin:0 0 2px;}
+  .card .cap{font-size:12px;color:var(--muted);margin:0 0 10px;}
+  svg{width:100%;height:auto;display:block;}
+  .lbl{font-size:9px;fill:#374151;font-weight:600;}
+  .lbl-s{font-size:8px;fill:#6b7280;}
+  .dim{font-size:8.5px;fill:#0ea5e9;font-weight:700;}
+  text{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+  .legend{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:#374151;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .sw{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.15);display:inline-block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>个人 IP 直播间 · CAD 平面图（东北角背景 · 旋转版）</h1>
+  <p class="sub">北墙整面吸音窗帘全封（背景幕+遮光+吸音）· 东墙做主陈设面 · 门在机位正后方（进出不穿帮）· 网格 = 500mm · 家具按真实尺寸缩放</p>
+
+  <!-- ===== 共享图形定义 ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <pattern id="grid" width="65" height="65" patternUnits="userSpaceOnUse">
+        <path d="M65 0H0V65" fill="none" stroke="#e6eaf0" stroke-width="1"/>
+      </pattern>
+      <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="6" stroke="#a78bfa" stroke-width="1.4"/>
+      </pattern>
+
+      <g id="chair">
+        <rect x="-280" y="-240" width="560" height="500" rx="80" fill="#e7ebf1" stroke="#7c8898" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+        <rect x="-280" y="195" width="560" height="95" rx="45" fill="#cfd6e0" stroke="#7c8898" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+        <rect x="-300" y="-150" width="72" height="360" rx="30" fill="#cfd6e0" stroke="#7c8898" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <rect x="228" y="-150" width="72" height="360" rx="30" fill="#cfd6e0" stroke="#7c8898" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <circle r="55" fill="#b9c2cf"/>
+      </g>
+      <g id="armchair">
+        <rect x="-390" y="-330" width="780" height="700" rx="110" fill="#dfe4ea" stroke="#7c8898" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+        <rect x="-390" y="270" width="780" height="120" rx="55" fill="#c7cfdb" stroke="#7c8898" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+        <rect x="-410" y="-220" width="110" height="500" rx="45" fill="#c7cfdb" stroke="#7c8898" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <rect x="300" y="-220" width="110" height="500" rx="45" fill="#c7cfdb" stroke="#7c8898" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+      </g>
+      <g id="sofa2">
+        <rect x="-875" y="-420" width="1750" height="780" rx="70" fill="#dfe4ea" stroke="#7c8898" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+        <rect x="-875" y="250" width="1750" height="120" rx="55" fill="#c7cfdb" stroke="#7c8898" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+        <rect x="-875" y="-420" width="150" height="780" rx="45" fill="#c7cfdb" stroke="#7c8898" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <rect x="725" y="-420" width="150" height="780" rx="45" fill="#c7cfdb" stroke="#7c8898" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <line x1="0" y1="-330" x2="0" y2="240" stroke="#a9b3c0" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+      </g>
+      <g id="rtable">
+        <circle r="350" fill="#d8b98c" stroke="#a1763f" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+        <circle r="300" fill="none" stroke="#a1763f" stroke-width="0.9" vector-effect="non-scaling-stroke"/>
+      </g>
+      <g id="monitor">
+        <rect x="-350" y="-35" width="700" height="60" rx="10" fill="#2b3442"/>
+        <rect x="-70" y="25" width="140" height="50" rx="8" fill="#5b6675"/>
+      </g>
+      <g id="plant">
+        <rect x="-130" y="-130" width="260" height="260" rx="30" fill="#b9805a" stroke="#8a5a37" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <circle r="250" fill="#6cbf73" opacity="0.85"/>
+        <circle r="150" fill="#4ea65b" opacity="0.7"/>
+      </g>
+      <g id="floorlamp">
+        <circle r="230" fill="#fde68a" stroke="#d9a441" stroke-width="1" vector-effect="non-scaling-stroke" opacity="0.85"/>
+        <circle r="55" fill="#b45309"/>
+      </g>
+      <g id="softbox">
+        <polygon points="443,184 184,443 -184,443 -443,184 -443,-184 -184,-443 184,-443 443,-184"
+          fill="#fff4d6" stroke="#f59e0b" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+        <circle r="90" fill="#f59e0b"/>
+      </g>
+      <g id="panel">
+        <rect x="-350" y="-200" width="700" height="400" rx="30" fill="#fff4d6" stroke="#f59e0b" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+        <circle r="70" fill="#f59e0b"/>
+      </g>
+      <g id="camera">
+        <polygon points="0,-200 -540,-980 540,-980" fill="#ef4444" opacity="0.16"/>
+        <line x1="0" y1="120" x2="-260" y2="360" stroke="#9ca3af" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+        <line x1="0" y1="120" x2="260" y2="360" stroke="#9ca3af" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+        <line x1="0" y1="120" x2="0" y2="400" stroke="#9ca3af" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+        <rect x="-160" y="-110" width="320" height="230" rx="28" fill="#ef4444" stroke="#b91c1c" stroke-width="1.3" vector-effect="non-scaling-stroke"/>
+        <rect x="-75" y="-200" width="150" height="100" rx="16" fill="#7f1d1d"/>
+      </g>
+      <g id="mic">
+        <circle r="90" fill="#334155" stroke="#0f172a" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+        <circle r="40" fill="#64748b"/>
+      </g>
+    </defs>
+  </svg>
+
+  <div class="row">
+
+    <!-- ============ 方案 1：口播（东北角背景）============ -->
+    <div class="card">
+      <h2>方案 1 · 口播 / 屏幕录制（单人常驻）</h2>
+      <p class="cap">主体在东北角、面朝西南；机位在西南，背后即入户门，进出不穿帮。</p>
+      <svg viewBox="0 0 850 875" role="img" aria-label="口播方案（东北角背景）">
+        <rect x="60" y="60" width="728" height="741" fill="url(#grid)" stroke="var(--wall)" stroke-width="6"/>
+        <rect x="60" y="60" width="728" height="741" fill="none" stroke="var(--wall)" stroke-width="6"/>
+
+        <!-- 北墙整面吸音窗帘（背景幕）-->
+        <path d="M130 64 q9 9 18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0"
+          fill="none" stroke="#10b981" stroke-width="4"/>
+        <text class="lbl" x="424" y="52" text-anchor="middle" fill="#10b981">北墙 · 整面吸音窗帘（背景幕 + 遮光 + 吸音）</text>
+
+        <!-- 东墙主陈设面 -->
+        <line x1="785" y1="80" x2="785" y2="430" stroke="#10b981" stroke-width="4"/>
+        <text class="lbl" x="812" y="250" text-anchor="middle" fill="#10b981" transform="rotate(90 812 250)">东墙 · 主陈设面</text>
+
+        <!-- 门（西墙南端）= 机位背后 -->
+        <line x1="60" y1="645" x2="60" y2="762" stroke="#fff" stroke-width="7"/>
+        <path d="M60 645 A117 117 0 0 1 177 762" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="4 3"/>
+        <text class="lbl-s" x="120" y="700" text-anchor="middle">入户门（机位背后）</text>
+
+        <!-- 吸音板（西墙=机位侧）-->
+        <rect x="66" y="240" width="16" height="360" fill="url(#hatch)" stroke="#a78bfa" stroke-width="0.8"/>
+        <text class="lbl-s" x="100" y="430" text-anchor="middle" transform="rotate(-90 100 430)">吸音板</text>
+
+        <!-- 地毯 -->
+        <rect x="294" y="99" width="442" height="403" rx="20" fill="#f1e9dc" stroke="#cbb896" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <text class="lbl-s" x="330" y="490">地毯 3×3m</text>
+
+        <!-- 东墙书架 + 东北角陈设 -->
+        <rect x="757" y="100" width="29" height="270" fill="#c9a274" stroke="#8a5a37" stroke-width="1.2"/>
+        <line x1="757" y1="154" x2="786" y2="154" stroke="#8a5a37" stroke-width="0.8"/>
+        <line x1="757" y1="208" x2="786" y2="208" stroke="#8a5a37" stroke-width="0.8"/>
+        <line x1="757" y1="262" x2="786" y2="262" stroke="#8a5a37" stroke-width="0.8"/>
+        <line x1="757" y1="316" x2="786" y2="316" stroke="#8a5a37" stroke-width="0.8"/>
+        <text class="lbl-s" x="748" y="120" text-anchor="end">书架+灯带</text>
+        <use href="#plant" transform="translate(742,120) scale(0.13)"/>
+        <use href="#floorlamp" transform="translate(749,255) scale(0.12)"/>
+        <use href="#plant" transform="translate(540,95) scale(0.11)"/>
+
+        <!-- 主体 + 口播桌（旋转 -135° 面朝西南）-->
+        <g transform="translate(619,229) rotate(-135) scale(0.13)">
+          <rect x="-750" y="-1250" width="1500" height="700" rx="30" fill="#d8b98c" stroke="#a1763f" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+          <use href="#monitor" transform="translate(0,-600)"/>
+          <use href="#chair" transform="translate(0,120)"/>
+        </g>
+        <text class="lbl" x="640" y="200" text-anchor="middle">主体（口播桌 1.5×0.7m）</text>
+
+        <!-- 灯 -->
+        <use href="#softbox" transform="translate(455,360) scale(0.13)"/>
+        <text class="lbl-s" x="455" y="418" text-anchor="middle">主光·柔光箱</text>
+        <use href="#panel" transform="translate(565,318) scale(0.12)"/>
+        <text class="lbl-s" x="565" y="295" text-anchor="middle">辅光</text>
+        <use href="#panel" transform="translate(700,150) rotate(45) scale(0.1)"/>
+        <text class="lbl-s" x="678" y="135" text-anchor="middle">轮廓光</text>
+        <use href="#panel" transform="translate(749,300) scale(0.09)"/>
+        <text class="lbl-s" x="730" y="335" text-anchor="middle">背景光</text>
+
+        <!-- 机位（西南，朝东北）-->
+        <use href="#camera" transform="translate(430,460) rotate(40) scale(0.13)"/>
+        <text class="lbl" x="398" y="495" text-anchor="middle" fill="#ef4444">A 主机位（正面·定焦虚化）</text>
+        <use href="#camera" transform="translate(548,520) rotate(15) scale(0.11)"/>
+        <text class="lbl-s" x="572" y="533" fill="#ef4444">B 机位（偏右）</text>
+        <use href="#camera" transform="translate(338,392) rotate(62) scale(0.11)"/>
+        <text class="lbl-s" x="308" y="383" fill="#ef4444">C 全景（偏左）</text>
+        <rect x="452" y="428" width="30" height="9" rx="2" fill="#0ea5e9" transform="rotate(-50 467 432)"/>
+        <text class="lbl-s" x="492" y="442" fill="#0ea5e9">提词器</text>
+
+        <!-- 导播台（南墙，机位背后）-->
+        <rect x="203" y="705" width="182" height="70" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.3"/>
+        <use href="#chair" transform="translate(294,690) rotate(180) scale(0.11)"/>
+        <text class="lbl" x="294" y="745" text-anchor="middle" fill="#7c3aed">导播 / 控制台</text>
+        <text class="lbl-s" x="294" y="760" text-anchor="middle" fill="#7c3aed">ATEM+电脑+监看</text>
+
+        <!-- 对角虚化标注 -->
+        <line x1="430" y1="460" x2="600" y2="245" stroke="#0ea5e9" stroke-width="1.1" stroke-dasharray="5 3"/>
+        <text class="dim" x="490" y="380" transform="rotate(-50 490 380)">对角虚化 ≈ 2.5m+</text>
+
+        <line x1="620" y1="845" x2="685" y2="845" stroke="#374151" stroke-width="2"/>
+        <text class="lbl-s" x="652" y="862" text-anchor="middle">1 m</text>
+      </svg>
+    </div>
+
+    <!-- ============ 方案 2：访谈（东北角背景）============ -->
+    <div class="card">
+      <h2>方案 2 · 访谈 / 视频播客（2-3 人，大场景）</h2>
+      <p class="cap">撤桌换沙发+扶手椅+圆几。同背景、同机位，门仍在机位背后。</p>
+      <svg viewBox="0 0 850 875" role="img" aria-label="访谈方案（东北角背景）">
+        <rect x="60" y="60" width="728" height="741" fill="url(#grid)" stroke="var(--wall)" stroke-width="6"/>
+        <rect x="60" y="60" width="728" height="741" fill="none" stroke="var(--wall)" stroke-width="6"/>
+
+        <path d="M130 64 q9 9 18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0 t18 0"
+          fill="none" stroke="#10b981" stroke-width="4"/>
+        <text class="lbl" x="424" y="52" text-anchor="middle" fill="#10b981">北墙 · 整面吸音窗帘（背景幕 + 遮光 + 吸音）</text>
+
+        <line x1="785" y1="80" x2="785" y2="430" stroke="#10b981" stroke-width="4"/>
+        <text class="lbl" x="812" y="250" text-anchor="middle" fill="#10b981" transform="rotate(90 812 250)">东墙 · 主陈设面</text>
+
+        <line x1="60" y1="645" x2="60" y2="762" stroke="#fff" stroke-width="7"/>
+        <path d="M60 645 A117 117 0 0 1 177 762" fill="none" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="4 3"/>
+        <text class="lbl-s" x="120" y="700" text-anchor="middle">入户门（机位背后）</text>
+
+        <rect x="66" y="240" width="16" height="360" fill="url(#hatch)" stroke="#a78bfa" stroke-width="0.8"/>
+        <text class="lbl-s" x="100" y="430" text-anchor="middle" transform="rotate(-90 100 430)">吸音板</text>
+
+        <rect x="270" y="95" width="480" height="440" rx="22" fill="#f1e9dc" stroke="#cbb896" stroke-width="1.2" stroke-dasharray="6 4"/>
+        <text class="lbl-s" x="305" y="525">地毯 3.2×3.8m</text>
+
+        <rect x="757" y="100" width="29" height="270" fill="#c9a274" stroke="#8a5a37" stroke-width="1.2"/>
+        <line x1="757" y1="154" x2="786" y2="154" stroke="#8a5a37" stroke-width="0.8"/>
+        <line x1="757" y1="208" x2="786" y2="208" stroke="#8a5a37" stroke-width="0.8"/>
+        <line x1="757" y1="262" x2="786" y2="262" stroke="#8a5a37" stroke-width="0.8"/>
+        <line x1="757" y1="316" x2="786" y2="316" stroke="#8a5a37" stroke-width="0.8"/>
+        <text class="lbl-s" x="748" y="120" text-anchor="end">书架+灯带</text>
+        <use href="#plant" transform="translate(744,118) scale(0.14)"/>
+        <use href="#floorlamp" transform="translate(749,255) scale(0.12)"/>
+        <use href="#plant" transform="translate(540,95) scale(0.11)"/>
+
+        <!-- 访谈区（旋转 -135° 面朝西南）-->
+        <g transform="translate(605,255) rotate(-135) scale(0.13)">
+          <use href="#rtable" transform="translate(250,150)"/>
+          <use href="#sofa2" transform="translate(-450,900)"/>
+          <use href="#armchair" transform="translate(1250,100) rotate(-115)"/>
+          <use href="#mic" transform="translate(-850,420)"/>
+          <use href="#mic" transform="translate(-50,420)"/>
+          <use href="#mic" transform="translate(950,-180)"/>
+        </g>
+        <text class="lbl" x="540" y="200" text-anchor="middle">双人沙发（嘉宾 1.75m）</text>
+        <text class="lbl" x="700" y="330" text-anchor="middle">主播扶手椅</text>
+        <text class="lbl-s" x="600" y="270" text-anchor="middle">圆几</text>
+
+        <!-- 灯（访谈多一盏）-->
+        <use href="#softbox" transform="translate(445,365) scale(0.14)"/>
+        <text class="lbl-s" x="445" y="425" text-anchor="middle">主光·柔光箱</text>
+        <use href="#softbox" transform="translate(560,310) scale(0.12)"/>
+        <text class="lbl-s" x="560" y="285" text-anchor="middle">辅光·柔光箱</text>
+        <use href="#panel" transform="translate(700,150) rotate(45) scale(0.1)"/>
+        <text class="lbl-s" x="678" y="135" text-anchor="middle">轮廓光</text>
+        <use href="#panel" transform="translate(749,300) scale(0.09)"/>
+        <text class="lbl-s" x="730" y="335" text-anchor="middle">背景光</text>
+
+        <use href="#camera" transform="translate(430,460) rotate(40) scale(0.13)"/>
+        <text class="lbl" x="398" y="495" text-anchor="middle" fill="#ef4444">A 主持机位（正面）</text>
+        <use href="#camera" transform="translate(548,520) rotate(15) scale(0.12)"/>
+        <text class="lbl-s" x="572" y="533" fill="#ef4444">B 嘉宾机位（偏右）</text>
+        <use href="#camera" transform="translate(338,392) rotate(62) scale(0.12)"/>
+        <text class="lbl-s" x="308" y="383" fill="#ef4444">C 全景双人（偏左）</text>
+
+        <rect x="203" y="705" width="182" height="70" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.3"/>
+        <use href="#chair" transform="translate(294,690) rotate(180) scale(0.11)"/>
+        <text class="lbl" x="294" y="745" text-anchor="middle" fill="#7c3aed">导播台（访谈需专人）</text>
+        <text class="lbl-s" x="294" y="760" text-anchor="middle" fill="#7c3aed">ATEM 切 3 机位+推流</text>
+
+        <line x1="620" y1="845" x2="685" y2="845" stroke="#374151" stroke-width="2"/>
+        <text class="lbl-s" x="652" y="862" text-anchor="middle">1 m</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <div class="legend">
+      <span><i class="sw" style="background:#e7ebf1"></i>办公椅 / 座椅</span>
+      <span><i class="sw" style="background:#dfe4ea"></i>沙发 / 扶手椅</span>
+      <span><i class="sw" style="background:#d8b98c"></i>桌 / 圆几（木）</span>
+      <span><i class="sw" style="background:#c9a274"></i>书架</span>
+      <span><i class="sw" style="background:#6cbf73"></i>绿植</span>
+      <span><i class="sw" style="background:#fff4d6;border-color:#f59e0b"></i>灯光</span>
+      <span><i class="sw" style="background:#ef4444"></i>摄像机+三脚架（含视野）</span>
+      <span><i class="sw" style="background:#334155"></i>麦克风</span>
+      <span><i class="sw" style="background:#ede9fe;border-color:#8b5cf6"></i>导播台</span>
+      <span><i class="sw" style="background:#f1e9dc;border-color:#cbb896"></i>地毯</span>
+      <span><i class="sw" style="background:#a78bfa"></i>吸音板</span>
+      <span><i class="sw" style="background:#10b981"></i>背景（东墙陈设+北墙窗帘幕）</span>
+    </div>
+    <p style="font-size:12.5px;color:#6b7280;line-height:1.7;margin:14px 0 0;">
+      <b>对比东南角版的核心差异：</b><br>
+      ① <b>门在机位正后方</b> → 进出永不穿帮，动线最从容（你提的关键优化）。<br>
+      ② <b>北墙整面吸音窗帘</b>：同时当背景幕布 + 遮光 + 吸音，三合一；自然光 100% 归零，色温全可控。<br>
+      ③ <b>东墙做"主陈设面"</b>（书架/灯带/装饰画重点堆这面）+ 东北角落地陈设（绿植/落地灯）补纵深，弥补"少一面实墙"。<br>
+      ④ 机位仍走房间对角线（≈8m）→ 虚化距离不变。两套方案只换前景软装，硬件/打光不动。
+    </p>
+  </div>
+</div>
+</body>
+</html>

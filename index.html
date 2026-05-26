@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人 IP 直播间 · 搭建完整方案</title>
+<style>
+  :root{
+    --ink:#1f2430; --muted:#6b7280; --line:#e1e6ee; --soft:#f6f8fb;
+    --green:#10b981; --red:#ef4444; --amber:#f59e0b; --purple:#8b5cf6; --blue:#3b82f6;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#eef1f5;color:var(--ink);line-height:1.65;
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+  .wrap{max-width:960px;margin:0 auto;padding:34px 22px 70px;}
+  header{background:linear-gradient(135deg,#1f2937,#374151);color:#fff;border-radius:16px;
+    padding:28px 30px;margin-bottom:22px;}
+  header h1{margin:0 0 6px;font-size:25px;}
+  header p{margin:0;color:#cbd5e1;font-size:13.5px;}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);
+    border-radius:999px;padding:4px 12px;font-size:12px;}
+  section{background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:22px 24px;margin-bottom:18px;box-shadow:0 1px 6px rgba(20,30,50,.04);}
+  h2{font-size:18px;margin:0 0 4px;display:flex;align-items:center;gap:9px;}
+  h2 .n{background:var(--ink);color:#fff;border-radius:8px;width:26px;height:26px;
+    display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:0 0 26px;}
+  .lead{color:var(--muted);font-size:13px;margin:2px 0 16px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0;}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:var(--soft);font-weight:700;color:#374151;font-size:12.5px;}
+  tr:last-child td{border-bottom:none;}
+  td.price{white-space:nowrap;font-weight:700;color:#0f766e;}
+  .total td{background:#f0fdf4;font-weight:800;border-top:2px solid var(--green);}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;color:#fff;}
+  .t-must{background:var(--red);} .t-now{background:var(--green);} .t-later{background:var(--purple);}
+  .t-have{background:#64748b;}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 14px;
+    font-size:12.5px;color:#92400e;margin-top:12px;}
+  .note b{color:#7c2d12;}
+  .key{background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;padding:12px 14px;
+    font-size:12.5px;color:#065f46;margin-top:12px;}
+  ul{margin:8px 0;padding-left:20px;font-size:13px;}
+  li{margin:4px 0;}
+  svg{width:100%;height:auto;display:block;max-width:520px;margin:8px auto;}
+  .lbl{font-size:9px;fill:#374151;font-weight:600;}
+  .lbl-s{font-size:8px;fill:#6b7280;}
+  .foot{text-align:center;color:#94a3b8;font-size:12px;margin-top:26px;}
+  @media print{body{background:#fff;} section,header{box-shadow:none;break-inside:avoid;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>个人 IP 直播间 · 搭建完整方案</h1>
+    <p>32㎡ 近正方形空间 · 多机位电影感工作室 · 单人主力 / 访谈可扩展 · 对标「影视飓风」口播质感</p>
+    <div class="meta">
+      <span class="chip">5.6 × 5.7 × 2.95 m</span>
+      <span class="chip">北面整窗 · 西/南/东三白墙</span>
+      <span class="chip">门在西墙西南端</span>
+      <span class="chip">商用宽带 500M 上行</span>
+      <span class="chip">第一阶段预算 ≈ ¥1.66 万 / 上限 3 万</span>
+    </div>
+  </header>
+
+  <!-- 1 设计总原则 -->
+  <section>
+    <h2><span class="n">1</span>设计总原则（先记住这几条）</h2>
+    <p class="lead">所有选择背后的逻辑，先对齐心法再看明细。</p>
+    <table>
+      <tr><th style="width:30%">原则</th><th>怎么做 / 为什么</th></tr>
+      <tr><td><b>质感三要素：光 ≈ 声 &gt; 相机</b></td><td>高级感主要来自<b>布光 + 干净声音 + 实景背景</b>，不是相机贵。所以钱优先砸灯光、声学、置景。</td></tr>
+      <tr><td><b>相机先省，用 Pocket 3 起步</b></td><td>已有 Pocket 3，先零成本开拍；省下 ~1.1 万。等出内容/有回流再买全画幅（兼顾照片+外出）。</td></tr>
+      <tr><td><b>分两步走，别一次到位</b></td><td>第一阶段把单机位口播+录屏跑通；访谈/多机位/ATEM 作为第二阶段，赚了再补。</td></tr>
+      <tr><td><b>实景虚化，不做绿幕</b></td><td>绿幕抠像门槛高、易穿帮、且<b>丢掉真实虚化</b>，与影视飓风质感相反。换背景靠换前景软装 + 背景大屏。</td></tr>
+      <tr><td><b>预算纪律：剩一半攥手里</b></td><td>第一阶段只花 ~1.66 万，剩 ~1.34 万留作跑道 buffer + 未来相机基金。设备能等你赚钱再补。</td></tr>
+      <tr><td><b>一室多用</b></td><td>同一面背景 + 同一组机位，换前景即在「口播 / 访谈」间切换；南墙做不入镜的运营办公带。</td></tr>
+    </table>
+  </section>
+
+  <!-- 2 空间布局 -->
+  <section>
+    <h2><span class="n">2</span>空间布局方案（东北角背景 · 对角线机位）</h2>
+    <p class="lead">俯视示意 —— <a href="cad-floorplan.html" style="color:#0ea5e9;font-weight:700;">点此查看按真实比例的双方案 CAD 平面图（口播 / 访谈）→</a></p>
+    <svg viewBox="0 0 520 520" role="img" aria-label="布局示意">
+      <rect x="40" y="40" width="440" height="440" fill="#fbfcfe" stroke="#2b3442" stroke-width="5"/>
+      <!-- 北墙窗帘 -->
+      <path d="M70 43 q10 7 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="#10b981" stroke-width="3.5"/>
+      <text class="lbl" x="260" y="33" text-anchor="middle" fill="#10b981">北墙 · 整面吸音窗帘（背景幕+遮光+吸音）</text>
+      <!-- 东墙背景 -->
+      <line x1="477" y1="55" x2="477" y2="270" stroke="#10b981" stroke-width="4"/>
+      <text class="lbl" x="498" y="165" text-anchor="middle" fill="#10b981" transform="rotate(90 498 165)">东墙 · 主陈设面（门面）</text>
+      <!-- 门 -->
+      <line x1="40" y1="380" x2="40" y2="455" stroke="#fff" stroke-width="6"/>
+      <path d="M40 380 A75 75 0 0 1 115 455" fill="none" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="4 3"/>
+      <text class="lbl-s" x="80" y="425" text-anchor="middle">入户门（机位背后）</text>
+      <!-- 主体 -->
+      <circle cx="395" cy="150" r="17" fill="#334155"/>
+      <text class="lbl" x="395" y="186" text-anchor="middle">主体（拍摄位）</text>
+      <text class="lbl-s" x="395" y="120" text-anchor="middle">面朝西南</text>
+      <!-- 机位扇形 -->
+      <g fill="#ef4444">
+        <rect x="250" y="290" width="20" height="16" rx="3"/>
+        <rect x="320" y="330" width="17" height="13" rx="3"/>
+        <rect x="195" y="245" width="17" height="13" rx="3"/>
+      </g>
+      <polygon points="260,288 180,200 360,200" fill="#ef4444" opacity="0.08"/>
+      <text class="lbl" x="250" y="322" text-anchor="middle" fill="#ef4444">A/B/C 三机位（扇形朝东北）</text>
+      <line x1="260" y1="290" x2="385" y2="160" stroke="#0ea5e9" stroke-width="1.1" stroke-dasharray="4 3"/>
+      <text class="lbl-s" x="300" y="240" fill="#0ea5e9" transform="rotate(-45 300 240)">对角线虚化</text>
+      <!-- 灯 -->
+      <circle cx="220" cy="210" r="11" fill="#f59e0b"/><text class="lbl-s" x="220" y="213" text-anchor="middle" fill="#fff">光</text>
+      <circle cx="320" cy="195" r="9" fill="#f59e0b"/>
+      <circle cx="450" cy="90" r="8" fill="#f59e0b"/>
+      <circle cx="455" cy="230" r="8" fill="#f59e0b"/>
+      <!-- 南墙运营带 -->
+      <rect x="120" y="415" width="260" height="50" rx="6" fill="#ede9fe" stroke="#8b5cf6" stroke-width="1.3"/>
+      <text class="lbl" x="250" y="438" text-anchor="middle" fill="#7c3aed">南墙 · 运营/办公/置物带</text>
+      <text class="lbl-s" x="250" y="453" text-anchor="middle" fill="#7c3aed">导播+办公+收纳（不入镜）</text>
+      <!-- 吸音 西墙 -->
+      <rect x="44" y="150" width="10" height="180" fill="#a78bfa" opacity="0.4"/>
+      <text class="lbl-s" x="75" y="250" text-anchor="middle" transform="rotate(-90 75 250)">西墙吸音</text>
+    </svg>
+    <table>
+      <tr><th style="width:22%">要素</th><th>方案</th></tr>
+      <tr><td><b>背景</b></td><td>东南→<b>东北角</b>两面交汇（东墙实墙 + 北墙窗帘幕），夹角纵深，影视飓风同款。</td></tr>
+      <tr><td><b>机位</b></td><td>西南半区，<b>扇形三机位</b>（C 偏左 / A 正面 / B 偏右）朝东北，走房间对角线（≈8m）虚化最大化。</td></tr>
+      <tr><td><b>动线</b></td><td>门在西南＝<b>机位正后方</b>，进出永不穿帮。</td></tr>
+      <tr><td><b>采光</b></td><td>北窗整面吸音窗帘全封，自然光归零，<b>100% 人造光可控</b>。</td></tr>
+      <tr><td><b>南墙</b></td><td>机位背后、不入镜＝<b>运营/办公/置物带</b>（指挥台）。出镜位与办公位分离。</td></tr>
+    </table>
+  </section>
+
+  <!-- 3 第一阶段设备清单 -->
+  <section>
+    <h2><span class="n">3</span>设备清单 · 第一阶段（用 Pocket 3 · ≈¥1.66 万）</h2>
+    <p class="lead">价格为大致行情（截至 2026 初），<b>以京东/淘宝实时价为准</b>。</p>
+    <table>
+      <tr><th>类别</th><th>推荐型号</th><th style="width:13%">预算</th><th>说明</th></tr>
+      <tr><td>相机 <span class="tag t-have">已有</span></td><td>DJI Pocket 3</td><td class="price">¥0</td><td>广角无需拉远、自带防抖、可配 DJI Mic 2。先开拍</td></tr>
+      <tr><td>主光 <span class="tag t-now">现购</span></td><td>amaran 100d S + 90cm 八角柔光箱</td><td class="price">¥2,000</td><td>常亮 LED 柔光定调，光质你认</td></tr>
+      <tr><td>辅光</td><td>amaran 60d</td><td class="price">¥900</td><td>补暗部、降反差</td></tr>
+      <tr><td>轮廓/背景光</td><td>amaran 灯管 T2c ×2</td><td class="price">¥1,200</td><td>勾边 + 背景光斑氛围</td></tr>
+      <tr><td>收音 <span class="tag t-must">关键</span></td><td>DJI Mic 2（单发）</td><td class="price">¥1,300</td><td>无线领夹，与 Pocket 3 无缝配对，人声干净</td></tr>
+      <tr><td>提词器</td><td>平板落地提词器</td><td class="price">¥600</td><td>讲课念稿刚需</td></tr>
+      <tr><td>支架</td><td>Pocket 3 桌面云台座 + 灯架 ×3</td><td class="price">¥1,300</td><td></td></tr>
+      <tr><td>防潮 <span class="tag t-must">必买</span></td><td>电子防潮箱 + 除湿机 + 湿度计 + 防潮珠</td><td class="price">¥1,300</td><td>护镜头/置景，连云港梅雨季刚需（见 §6）</td></tr>
+      <tr class="total"><td colspan="2">设备小计</td><td class="price">≈ ¥8,600</td><td>灯光/收音/支架/防潮</td></tr>
+    </table>
+    <div class="key"><b>下一节的置景（窗帘/地毯/吸音/陈设）≈ ¥8,000</b>，与上表合计 <b>≈ ¥1.66 万</b>，落在 3 万预算内，剩 <b>~¥1.34 万留作跑道 buffer + 未来相机基金</b>。</div>
+  </section>
+
+  <!-- 4 置景/四面墙 -->
+  <section>
+    <h2><span class="n">4</span>置景方案 · 四面墙（只有东墙花钱装饰）</h2>
+    <p class="lead">观众只看得到背景两面（东+北）；西、南墙在机位背后，只做功能处理，不花装饰钱。</p>
+    <table>
+      <tr><th style="width:14%">墙</th><th style="width:13%">入镜?</th><th>做什么</th><th style="width:13%">预算</th></tr>
+      <tr><td><b>东墙</b> ⭐</td><td>✅ 主背景</td><td>书架 + LED 灯带 + 装饰画 + 绿植 + 落地灯（门面，高级感全靠它）</td><td class="price">¥3,500</td></tr>
+      <tr><td><b>北墙（窗）</b></td><td>✅ 背景另一半</td><td>整面三合一遮光绒布窗帘（遮光+背景幕+吸音，选防霉款）</td><td class="price">¥2,200</td></tr>
+      <tr><td><b>西墙</b></td><td>❌ 机位背后</td><td>只挂吸音板（防霉款），门照常用，不装饰</td><td class="price">¥900</td></tr>
+      <tr><td><b>南墙</b></td><td>❌ 运营区背后</td><td>吸音板 + 运营/办公桌 + 置物架（收纳，不入镜）</td><td class="price">¥600*</td></tr>
+      <tr><td colspan="2"><b>地面</b></td><td>哑光短绒地毯 3×3m（杀地面反光 + 吸脚步声）</td><td class="price">¥800</td></tr>
+      <tr class="total"><td colspan="3">置景小计（*运营桌/置物架若用现有家具可省）</td><td class="price">≈ ¥8,000</td></tr>
+    </table>
+    <div class="note"><b>防霉提示：</b>吸音板选带防霉处理款；窗帘选可清洗/防霉绒布；书架的书离墙留 1–2cm 空气缝；真绿植别浇太勤。</div>
+  </section>
+
+  <!-- 5 灯光 -->
+  <section>
+    <h2><span class="n">5</span>灯光方案（四灯布光 · amaran）</h2>
+    <p class="lead">amaran 是 Aputure 的平价子线，给你喜欢的光质、近神牛的价；不必上贵的 Aputure LS 旗舰线。</p>
+    <table>
+      <tr><th style="width:18%">灯位</th><th>作用</th><th>器材</th></tr>
+      <tr><td><b>主光</b></td><td>定调，打在人脸前侧 45°，决定整体光感</td><td>amaran 100d S + 90cm 八角柔光箱</td></tr>
+      <tr><td><b>辅光</b></td><td>补暗部阴影，控制明暗反差</td><td>amaran 60d（或平板灯）</td></tr>
+      <tr><td><b>轮廓光</b></td><td>人物后上方勾边，把人和背景分离</td><td>amaran 灯管 T2c</td></tr>
+      <tr><td><b>背景光</b></td><td>照亮东墙陈设，虚化后成光斑层次</td><td>amaran 灯管 T2c + 背景 LED 灯带</td></tr>
+    </table>
+    <div class="key"><b>口诀：</b>主光定调 → 辅光降反差 → 轮廓光分离主体 → 背景光出层次。常亮 LED（不是闪光灯），方便所见即所得。</div>
+  </section>
+
+  <!-- 6 声学 + 防潮 -->
+  <section>
+    <h2><span class="n">6</span>声学处理 + 防潮（环境保障）</h2>
+    <p class="lead">正方形房间易混响 → 吸音；连云港靠海+梅雨 → 防潮（保护镜头与置景）。</p>
+    <table>
+      <tr><th style="width:18%">类别</th><th>措施</th><th style="width:13%">预算</th></tr>
+      <tr><td>吸音</td><td>西/南墙吸音板 + 地面地毯 + 绒布窗帘（三者已含在置景）；压住混响、人声更实</td><td class="price">已含</td></tr>
+      <tr><td>防潮 · 镜头 <span class="tag t-must">必</span></td><td>电子防潮箱 20–30L（相机/镜头不用时存放，锁 40–50% 湿度）</td><td class="price">¥400</td></tr>
+      <tr><td>防潮 · 全屋 <span class="tag t-must">必</span></td><td>家用除湿机 10–12L/天（护置景布料，梅雨/阴雨天常开）</td><td class="price">¥800</td></tr>
+      <tr><td>防潮 · 监控</td><td>电子温湿度计（目标 &lt;60%）+ 防潮珠备用</td><td class="price">¥100</td></tr>
+    </table>
+    <div class="note"><b>习惯：</b>阴雨天关窗+开除湿机（别放潮气进来）；设备别贴地贴墙、架高留缝；灯/电子设备定期开机发热驱潮。（防潮三件套已计入 §3 的 ¥1,300）</div>
+  </section>
+
+  <!-- 7 技术与工作流 -->
+  <section>
+    <h2><span class="n">7</span>技术搭建与工作流</h2>
+    <p class="lead">单人为主，录制式多机位现在就能玩；实时直播切换（ATEM）留到第二阶段。</p>
+    <table>
+      <tr><th style="width:22%">环节</th><th>方案</th></tr>
+      <tr><td><b>单人录视频</b></td><td>Pocket 3 主拍；想要多角度 → <b>Pocket 3 + Action 5 + 手机 + Insta360 同时录，后期同步剪</b>（零成本多机位）</td></tr>
+      <tr><td><b>屏幕录制教学</b></td><td>ScreenStudio（自带局部自动放大）+ 口播小窗，影视飓风同款教程格式</td></tr>
+      <tr><td><b>单人直播</b></td><td>守 1 主机位直推；要切镜头时导播面板放桌上坐着切</td></tr>
+      <tr><td><b>实时多机位/访谈直播</b></td><td>第二阶段上 <b>ATEM Mini Pro ISO</b>（视频切换台：多路相机实时切+叠PPT+推流+各路单独录）</td></tr>
+      <tr><td><b>网络</b></td><td>商用宽带 500M 上行，远超需求（多机位 4K 直播仅吃 20–50M），无约束</td></tr>
+      <tr><td><b>后期动效</b></td><td>行内动效在剪辑软件做；<b>Remotion / HyperFrames</b> 用来做可复用的品牌动效模板（片头/字幕条/知识卡）＝单人产能杠杆</td></tr>
+    </table>
+  </section>
+
+  <!-- 8 第二阶段 -->
+  <section>
+    <h2><span class="n">8</span>第二阶段 · 访谈 / 多机位升级 <span class="tag t-later" style="font-size:12px;">后补</span></h2>
+    <p class="lead">等出了内容、接到项目、有现金回流再投，不强求塞进当前 3 万。</p>
+    <table>
+      <tr><th>类别</th><th>选型</th><th style="width:16%">预算</th></tr>
+      <tr><td>主相机（兼照片/外出）</td><td>全画幅 A7 级机身 + 24-70mm f2.8 变焦（变焦解决取景灵活、不用搬机）</td><td class="price">¥25,000–35,000</td></tr>
+      <tr><td>或：经济多机位</td><td>再添 2 台 APS-C（ZV-E10 II 类）做 B/C 机位</td><td class="price">¥10,000</td></tr>
+      <tr><td>导播台</td><td>ATEM Mini Pro ISO</td><td class="price">¥5,000</td></tr>
+      <tr><td>访谈家具</td><td>双人沙发 + 主播扶手椅 + 圆几</td><td class="price">¥4,000</td></tr>
+      <tr><td>多支麦</td><td>再加 2 支领夹/桌面麦</td><td class="price">¥1,500</td></tr>
+    </table>
+    <div class="note"><b>相机时机提醒：</b>全画幅是「一次买好（照片+外出+主机位）」的决策，<b>现在别买</b>——别让个人摄影需求膨胀直播间预算。用 Pocket 3 先把内容跑通、验证出镜状态，再当独立决策入手。</div>
+  </section>
+
+  <!-- 9 预算汇总 -->
+  <section>
+    <h2><span class="n">9</span>预算汇总</h2>
+    <table>
+      <tr><th>阶段</th><th>内容</th><th style="width:18%">金额</th></tr>
+      <tr><td><b>第一阶段</b>（现在）</td><td>设备（灯/麦/支架/防潮）¥8,600 + 置景 ¥8,000</td><td class="price">≈ ¥16,600</td></tr>
+      <tr><td>预算上限</td><td>你设定的总框</td><td class="price">¥30,000</td></tr>
+      <tr class="total"><td colspan="2">留存 buffer（跑道 + 未来相机基金）</td><td class="price">≈ ¥13,400</td></tr>
+      <tr><td><b>第二阶段</b>（后补）</td><td>多机位/ATEM/访谈家具（视回流再投）</td><td class="price">¥1.5–4 万</td></tr>
+    </table>
+    <div class="key"><b>核心节奏：</b>用一半预算把高质感内容先跑起来，另一半攥在手里。设备永远可以等你赚了钱再补——先出片、再升级。</div>
+  </section>
+
+  <!-- 10 落地节奏 -->
+  <section>
+    <h2><span class="n">10</span>落地节奏（建议顺序）</h2>
+    <ul>
+      <li><b>第 1 步</b>：北墙窗帘 + 地毯 + 西/南墙吸音 + 防潮三件套（先把环境做对）</li>
+      <li><b>第 2 步</b>：东墙陈设（书架/灯带/装饰画/绿植/落地灯）——唯一的门面，慢慢调到满意</li>
+      <li><b>第 3 步</b>：灯光四件套到位 + Pocket 3 + DJI Mic 2 + 提词器 → <b>开拍验证出镜状态</b></li>
+      <li><b>第 4 步</b>：用现有设备试录制式多机位 + 搭一套后期动效模板</li>
+      <li><b>第 5 步</b>：出了内容/有回流 → 再决策全画幅相机 + 访谈升级（第二阶段）</li>
+    </ul>
+    <div class="key">先把"能出片"跑通，别等"完美的棚"。卖了再准备 &gt; 等准备好再卖。</div>
+  </section>
+
+  <p class="foot">个人 IP 直播间搭建方案 · 2026-05 · 价格以实时市场价为准</p>
+</div>
+</body>
+</html>
